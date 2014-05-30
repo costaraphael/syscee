@@ -1,0 +1,52 @@
+<h2><i class="fa fa-calendar"></i> &nbsp;Períodos</h2>
+<hr>
+<% if notice %>
+    <div class="alert alert-success fill">
+      <button type="button" class="close" data-dismiss="alert">
+        ×
+      </button>
+      <%= notice %>
+    </div>
+<% end %>
+<p>
+  <%= link_to 'Adicionar Período', new_periodo_path, class: 'btn btn-primary' %>
+</p>
+<% if @periodos.any? %>
+    <table class="table table-hover" style="margin-top: 10px">
+      <thead>
+      <tr>
+        <th>Nome</th>
+        <th class="text-center" width="70"><i class="fa fa-cogs"></i></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @periodos.each do |periodo| %>
+          <tr>
+            <td><%= periodo.nome %></td>
+            <td class="text-center">
+              <div class="dropdown">
+                <a class="btn btn-xs btn-default" data-toggle="dropdown">
+                  <i class="fa fa-cog"></i><span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu text-left">
+                  <li role="presentation"><%= link_to edit_periodo_path(periodo) do %>
+                        <i class="fa fa-edit"></i> Editar
+                    <% end %></li>
+                  <li role="presentation"><%= link_to periodo, method: :delete, data: {confirm: 'Deseja realmente remover este período?'} do %>
+                        <i class="fa fa-trash-o"></i> Remover
+                    <% end %></li>
+                </ul>
+              </div>
+
+
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <div class="alert alert-info">
+      Parece que ainda não existe nenhum período cadastrado.
+    </div>
+<% end %>

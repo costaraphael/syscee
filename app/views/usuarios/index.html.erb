@@ -1,0 +1,58 @@
+<h2><i class="fa fa-users"></i> &nbsp;Usuários</h2>
+<hr>
+<% if notice %>
+    <div class="alert alert-success fill">
+      <button type="button" class="close" data-dismiss="alert">
+        ×
+      </button>
+      <%= notice %>
+    </div>
+<% end %>
+<p>
+  <%= link_to 'Adicionar Usuário', new_usuario_path, class: 'btn btn-primary' %>
+</p>
+<% if @usuarios.any? %>
+    <table class="table table-hover" style="margin-top: 10px">
+      <thead>
+      <tr>
+        <th width="1%">CI</th>
+        <th>Nome</th>
+        <th>CGU</th>
+        <th>Nível de Acesso</th>
+        <th class="text-center" width="70"><i class="fa fa-cogs"></i></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @usuarios.each do |usuario| %>
+          <tr>
+            <td class="text-center"><%= usuario.id %></td>
+            <td><%= usuario.nome %></td>
+            <td><%= usuario.cgu %></td>
+            <td><%= usuario.tipo_usuario.nome %></td>
+            <td class="text-center">
+              <div class="dropdown">
+                <a class="btn btn-xs btn-default" data-toggle="dropdown">
+                  <i class="fa fa-cog"></i><span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu text-left">
+                  <li role="presentation"><%= link_to edit_usuario_path(usuario) do %>
+                        <i class="fa fa-edit"></i> Editar
+                    <% end %></li>
+                  <li role="presentation"><%= link_to usuario, method: :delete, data: {confirm: 'Deseja realmente remover este usuário?'} do %>
+                        <i class="fa fa-trash-o"></i> Remover
+                    <% end %></li>
+                </ul>
+              </div>
+
+
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <div class="alert alert-info">
+      Parece que ainda não existe nenhum usuário cadastrado.
+    </div>
+<% end %>

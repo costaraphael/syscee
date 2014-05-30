@@ -1,0 +1,36 @@
+<%= form_for(@usuario) do |f| %>
+    <% if @usuario.errors.any? %>
+        <div class="alert alert-danger fill">
+          <h4><%= pluralize(@usuario.errors.count, "erro") %> impediu este usuário de ser salvo.</h4>
+
+          <ul>
+            <% @sala.errors.full_messages.each do |message| %>
+                <li><small><%= message %></small></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <hr>
+    <div class="row">
+      <div class="col col-xs-12 form-group">
+        <%= f.label :nome %>
+        <br>
+        <%= f.text_field :nome, class: 'form-control' %>
+      </div>
+      <div class="col col-md-6 col-xs-12 form-group">
+        <%= f.label :cgu %>
+        <br>
+        <%= f.text_field :cgu, class: 'form-control' %>
+      </div>
+      <div class="col col-md-6 col-xs-12 form-group">
+        <%= f.label 'Nível de Acesso' %>
+        <br>
+        <%= f.collection_select(:tipo_usuario_id, TipoUsuario.all, :id, :nome, {:prompt => 'Selecione um nível de acesso.'}, {class: 'form-control'}) %>
+      </div>
+    </div>
+    <hr>
+    <div class="actions" style="margin-bottom: 50px">
+      <%= f.submit 'Salvar', class: 'btn btn-primary pull-left' %>
+      <%= link_to 'Voltar', usuarios_path, class: 'btn btn-default pull-right' %>
+    </div>
+<% end %>

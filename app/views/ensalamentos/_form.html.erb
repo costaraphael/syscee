@@ -1,0 +1,37 @@
+<%= form_for(@ensalamento) do |f| %>
+  <% if @ensalamento.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ensalamento.errors.count, "error") %> prohibited this ensalamento from being saved:</h2>
+
+      <ul>
+      <% @ensalamento.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :disciplina_id %><br>
+    <%= f.text_field :disciplina_id %>
+  </div>
+  <div class="field">
+    <%= f.label :sala_id %><br>
+    <%= f.text_field :sala_id %>
+  </div>
+  <div class="field">
+    <%= f.label :periodo_id %><br>
+    <%= f.text_field :periodo_id %>
+  </div>
+  <div class="field">
+    <%= f.label :alunos %><br>
+    <%= f.number_field :alunos %>
+  </div>
+  <div class="field">
+    <%= f.label :final %><br>
+    <%= f.check_box :final %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,41 @@
+<%= form_for(@sala) do |f| %>
+    <% if @sala.errors.any? %>
+        <div class="alert alert-danger fill">
+          <h4><%= pluralize(@sala.errors.count, "erro") %> impediu esta sala de ser salva.</h4>
+
+          <ul>
+            <% @sala.errors.full_messages.each do |message| %>
+                <li><small><%= message %></small></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <hr>
+    <div class="row">
+      <div class="col col-xs-12 form-group">
+        <%= f.label 'Prédio' %>
+        <br>
+        <%= f.collection_select(:predio_id, Predio.all, :id, :nome, {:prompt => 'Selecione um prédio'}, {class: 'form-control'}) %>
+      </div>
+      <div class="col col-xs-12 form-group">
+        <%= f.label :nome %>
+        <br>
+        <%= f.text_field :nome, class: 'form-control' %>
+      </div>
+      <div class="form-group col col-xs-6">
+        <%= f.label :numero %>
+        <br>
+        <%= f.number_field :numero, class: 'form-control', min: 0 %>
+      </div>
+      <div class="form-group col col-xs-6">
+        <%= f.label :capacidade %>
+        <br>
+        <%= f.number_field :capacidade, class: 'form-control', min: 0 %>
+      </div>
+    </div>
+    <hr>
+    <div class="actions" style="margin-bottom: 50px">
+      <%= f.submit 'Salvar', class: 'btn btn-primary pull-left' %>
+      <%= link_to 'Voltar', salas_path, class: 'btn btn-default pull-right' %>
+    </div>
+<% end %>

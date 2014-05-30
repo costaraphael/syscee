@@ -1,0 +1,31 @@
+<%= form_for [@curso, @disciplina] do |f| %>
+    <% if @disciplina.errors.any? %>
+        <div class="alert alert-danger fill">
+          <h4><%= pluralize(@disciplina.errors.count, "erro") %> impediu esta disciplina de ser salva.</h4>
+
+          <ul>
+            <% @sala.errors.full_messages.each do |message| %>
+                <li><small><%= message %></small></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <hr>
+    <div class="row">
+      <div class="col col-xs-12 form-group">
+        <%= f.label 'Professor' %>
+        <br>
+        <%= f.collection_select(:professor_id, Usuario.all, :id, :nome, {:prompt => 'Selecione um professor.'}, {class: 'form-control'}) %>
+      </div>
+      <div class="col col-xs-12 form-group">
+        <%= f.label :nome %>
+        <br>
+        <%= f.text_field :nome, class: 'form-control' %>
+      </div>
+    </div>
+    <hr>
+    <div class="actions" style="margin-bottom: 50px">
+      <%= f.submit 'Salvar', class: 'btn btn-primary pull-left' %>
+      <%= link_to 'Voltar', curso_disciplinas_path(@curso, @disciplina), class: 'btn btn-default pull-right' %>
+    </div>
+<% end %>

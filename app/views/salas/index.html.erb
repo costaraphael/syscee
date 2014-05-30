@@ -1,0 +1,58 @@
+<h2><i class="fa fa-building-o"></i> &nbsp;Salas</h2>
+<hr>
+<% if notice %>
+    <div class="alert alert-success fill">
+      <button type="button" class="close" data-dismiss="alert">
+        ×
+      </button>
+      <%= notice %>
+    </div>
+<% end %>
+<p>
+  <%= link_to 'Adicionar Sala', new_sala_path, class: 'btn btn-primary' %>
+</p>
+<% if @salas.any? %>
+    <table class="table table-hover" style="margin-top: 10px">
+      <thead>
+      <tr>
+        <th>Prédio</th>
+        <th>Nome</th>
+        <th width="1%">Número</th>
+        <th width="1%">Capacidade</th>
+        <th class="text-center" width="70"><i class="fa fa-cogs"></i></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @salas.each do |sala| %>
+          <tr>
+            <td><%= sala.predio.nome %></td>
+            <td><%= sala.nome %></td>
+            <td class="text-center"><%= sala.numero %></td>
+            <td class="text-center"><%= sala.capacidade ? sala.capacidade : '--' %></td>
+            <td class="text-center">
+              <div class="dropdown">
+                <a class="btn btn-xs btn-default" data-toggle="dropdown">
+                  <i class="fa fa-cog"></i><span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu text-left">
+                  <li role="presentation"><%= link_to edit_sala_path(sala) do %>
+                        <i class="fa fa-edit"></i> Editar
+                    <% end %></li>
+                  <li role="presentation"><%= link_to sala, method: :delete, data: {confirm: 'Deseja realmente remover esta sala?'} do %>
+                        <i class="fa fa-trash-o"></i> Remover
+                    <% end %></li>
+                </ul>
+              </div>
+
+
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <div class="alert alert-info">
+      Parece que ainda não existe nenhuma sala cadastrada.
+    </div>
+<% end %>

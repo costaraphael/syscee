@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Disciplina:</strong>
+  <%= @ensalamento.disciplina %>
+</p>
+
+<p>
+  <strong>Sala:</strong>
+  <%= @ensalamento.sala %>
+</p>
+
+<p>
+  <strong>Periodo:</strong>
+  <%= @ensalamento.periodo %>
+</p>
+
+<p>
+  <strong>Alunos:</strong>
+  <%= @ensalamento.alunos %>
+</p>
+
+<p>
+  <strong>Final:</strong>
+  <%= @ensalamento.final %>
+</p>
+
+<%= link_to 'Edit', edit_ensalamento_path(@ensalamento) %> |
+<%= link_to 'Back', ensalamentos_path %>

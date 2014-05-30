@@ -1,0 +1,26 @@
+<%= form_for(@periodo) do |f| %>
+    <% if @periodo.errors.any? %>
+        <div class="alert alert-danger fill">
+          <h4><%= pluralize(@periodo.errors.count, "erro") %> impediu este período de ser salvo.</h4>
+
+          <ul>
+            <% @periodo.errors.full_messages.each do |message| %>
+                <li><small><%= message %></small></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <hr>
+    <div class="row">
+      <div class="col col-xs-12 form-group">
+        <%= f.label :nome %>
+        <br>
+        <%= f.text_field :nome, class: 'form-control' %>
+      </div>
+    </div>
+    <hr>
+    <div class="actions" style="margin-bottom: 50px">
+      <%= f.submit 'Salvar', class: 'btn btn-primary pull-left' %>
+      <%= link_to 'Voltar', periodos_path, class: 'btn btn-default pull-right' %>
+    </div>
+<% end %>
