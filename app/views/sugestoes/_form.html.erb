@@ -1,0 +1,29 @@
+<%= form_for [@ensalamento, @sugestao] do |f| %>
+    <% if @sugestao.errors.any? %>
+        <div class="alert alert-danger fill">
+          <h4><%= pluralize(@sugestao.errors.count, 'erro impediu', 'erros impediram') %>  esta sugestão de ensalamento
+            de ser salva.</h4>
+
+          <ul>
+            <% @sugestao.errors.full_messages.each do |message| %>
+                <li>
+                  <small><%= message %></small>
+                </li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <hr>
+    <div class="row">
+      <div class="col col-xs-6 form-group">
+        <%= f.label 'Sala' %>
+        <br>
+        <%= f.collection_select(:sala_id, Sala.all, :id, :nome, {:prompt => 'Selecione uma sala.'}, {class: 'select2', style: 'width: 100%'},) %>
+      </div>
+    </div>
+    <hr>
+    <div class="actions" style="margin-bottom: 50px">
+      <%= f.submit 'Salvar', class: 'btn btn-primary pull-left' %>
+      <%= link_to 'Voltar', ensalamento_sugestoes_path(@ensalamento, @sugestao), class: 'btn btn-default pull-right' %>
+    </div>
+<% end %>

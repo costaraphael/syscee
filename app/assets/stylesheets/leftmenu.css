@@ -72,7 +72,7 @@
 	-moz-transition: height .5s ease-in-out;
 	-webkit-transition: height .5s ease-in-out; }
 
-.sidenav ul > li.user.usershow { height: 130px !important; }
+.sidenav ul > li.user.usershow { height: 145px !important; }
 
 .sidenav ul > li.user img { float: left; }
 
@@ -152,7 +152,7 @@
 	border: 0;
 	bottom: 0;
 	padding: 0;
-	top: 130px;
+	top: 145px;
 	height: auto;
 	margin-top: 0;
 	margin-left: 0;

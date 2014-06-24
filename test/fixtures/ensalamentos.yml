@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  disciplina_id: 
+  sala_id: 
+  periodo_id: 
+  alunos: 1
+  final: false
+
+two:
+  disciplina_id: 
+  sala_id: 
+  periodo_id: 
+  alunos: 1
+  final: false

@@ -13,3 +13,20 @@
  *= require_tree .
  *= require_self
  */
+
+li.user {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+li.user > div.content {
+    margin-top: 10px;
+}
+
+li.user > div.content > div {
+    display: table;
+    margin-top: 80px;
+}
+
+li.user > div.content > div > small {
+    font-size: 82%;
+}

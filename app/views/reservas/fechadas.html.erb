@@ -1,0 +1,56 @@
+<h2><i class="fa fa-calendar"></i> &nbsp;Reservas fechadas</h2>
+<hr>
+<% if notice %>
+    <div class="alert alert-success fill">
+      <button type="button" class="close" data-dismiss="alert">
+        ×
+      </button>
+      <%= notice %>
+    </div>
+<% end %>
+<% if @reservas.any? %>
+    <table class="table table-hover" style="margin-top: 10px">
+      <thead>
+      <tr>
+        <th>Solicitante</th>
+        <th>Efetuou</th>
+        <th>Espaço</th>
+        <th>Início</th>
+        <th>Fim</th>
+        <th>Situação</th>
+        <th class="text-center" width="70"><i class="fa fa-cogs"></i></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @reservas.each do |reserva| %>
+          <tr>
+            <td><%= reserva.solicitante.nome %></td>
+            <td><%= reserva.deferente.nome %></td>
+            <td><%= reserva.espaco.nome %></td>
+            <td><%= reserva.inicio.strftime('%d/%m/%Y às %H:%M') %></td>
+            <td><%= reserva.fim.strftime('%d/%m/%Y às %H:%M') %></td>
+            <td><%= reserva.status == 2 ? 'Aprovada' : 'Negada' %></td>
+            <td class="text-center">
+              <div class="dropdown">
+                <a class="btn btn-xs btn-default" data-toggle="dropdown">
+                  <i class="fa fa-cog"></i><span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu text-left">
+                  <li role="presentation"><%= link_to edit_reserva_path(reserva) do %>
+                        <i class="fa fa-edit"></i> Editar
+                    <% end %></li>
+                </ul>
+              </div>
+
+
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <div class="alert alert-info">
+      Parece que nenhuma reserva foi efetuada ainda.
+    </div>
+<% end %>

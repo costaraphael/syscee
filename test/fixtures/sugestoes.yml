@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  sala: MyString
+  ensalamento_id: 
+
+two:
+  sala: MyString
+  ensalamento_id: 

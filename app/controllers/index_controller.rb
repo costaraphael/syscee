@@ -3,6 +3,8 @@ class IndexController < ApplicationController
   require 'openssl'
 
   def index
+    @periodos = Periodo.all
+    @reservas = Reserva.where('status = 2')
   end
 
   def login
@@ -16,6 +18,7 @@ class IndexController < ApplicationController
     senha = login[:senha]
     url = "https://memphis.ulbranet.com.br/aamovel/login?i_cgu=#{cgu}&i_senha=#{senha}"
 
+=begin
     uri = URI.parse(url)
     http = Net::HTTP.new(uri.host, 443)
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -23,11 +26,13 @@ class IndexController < ApplicationController
     http.ssl_version = :SSLv3
     request = Net::HTTP::Get.new(uri.request_uri)
     response = http.request(request).body
+=end
+    usuario = Usuario.find_by_cgu login[:cgu]
 
-    if response[1..4] == 'ERRO'
+    # if response[1..4] == 'ERRO' or usuario.nil?
+    if false or usuario.nil?
       redirect_to login_path, notice: 'Dados de login incorretos.'
     else
-      usuario = Usuario.where("cgu = #{login[:cgu]}").take
       cookies[:login] = {value: usuario.id, expires: Time.now + 900}
       redirect_to root_path
     end

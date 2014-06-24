@@ -1,10 +1,10 @@
 <%= form_for [@curso, @disciplina] do |f| %>
     <% if @disciplina.errors.any? %>
         <div class="alert alert-danger fill">
-          <h4><%= pluralize(@disciplina.errors.count, "erro") %> impediu esta disciplina de ser salva.</h4>
+          <h4><%= pluralize(@disciplina.errors.count, 'erro impediu', 'erros impediram') %>  esta disciplina de ser salva.</h4>
 
           <ul>
-            <% @sala.errors.full_messages.each do |message| %>
+            <% @disciplina.errors.full_messages.each do |message| %>
                 <li><small><%= message %></small></li>
             <% end %>
           </ul>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  nome: MyString
+  cgu: MyString
+  tipo_usuario_id: 
+
+two:
+  nome: MyString
+  cgu: MyString
+  tipo_usuario_id: 

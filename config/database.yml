@@ -14,20 +14,19 @@ default: &default
   encoding: utf8
   pool: 5
   username: root
-  password:
+  password: JSGC9cXntQBBO9Y0
   host: localhost
-  socket: '/opt/lampp/var/mysql/mysql.sock'
 
 development:
   <<: *default
-  database: syscee_development
+  database: zadmin_syscee
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: syscee_test
+  database: zadmin_sysceetest
 
 # As with config/secrets.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -50,5 +49,4 @@ test:
 #
 production:
   <<: *default
-  database: syscee_development
-  username: root
+  database: zadmin_syscee

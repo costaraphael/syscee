@@ -1,29 +1,66 @@
-<p id="notice"><%= notice %></p>
+<h2>Detalhes do ensalamento</h2>
 
-<p>
-  <strong>Disciplina:</strong>
-  <%= @ensalamento.disciplina %>
-</p>
-
-<p>
-  <strong>Sala:</strong>
-  <%= @ensalamento.sala %>
-</p>
-
-<p>
-  <strong>Periodo:</strong>
-  <%= @ensalamento.periodo %>
-</p>
-
-<p>
-  <strong>Alunos:</strong>
-  <%= @ensalamento.alunos %>
-</p>
-
-<p>
-  <strong>Final:</strong>
-  <%= @ensalamento.final %>
-</p>
-
-<%= link_to 'Edit', edit_ensalamento_path(@ensalamento) %> |
-<%= link_to 'Back', ensalamentos_path %>
+<div class="row">
+  <div class="panel panel-info col-xs-12 col-md-6" style="margin: 15px">
+    <div class="panel-heading">
+      <h3 class="panel-title">Dados </h3>
+    </div>
+    <div class="panel-body">
+      <dl>
+        <dt>Período</dt>
+        <dd><%= @ensalamento.periodo.nome %></dd>
+        <br>
+        <dt>Disciplina</dt>
+        <dd><%= @ensalamento.disciplina.nome %> (<%= @ensalamento.disciplina.curso.nome %>)</dd>
+        <br>
+        <dt>Quantidade de alunos</dt>
+        <dd><%= @ensalamento.alunos %></dd>
+      </dl>
+    </div>
+  </div>
+  <div class="panel panel-info col-xs-12 col-md-5" style="margin: 15px">
+    <div class="panel-heading">
+      <h3 class="panel-title">Sugestões </h3>
+    </div>
+    <div class="panel-body">
+      <% if @ensalamento.sugestoes.any? %>
+          <ul>
+            <% @ensalamento.sugestoes.each do |sugestao| %>
+                <li><%= sugestao.sala.nome %></li>
+            <% end %>
+          </ul>
+      <% else %>
+          <div class="alert alert-info fill">
+            <p>Parece que nenhuma sugestão foi feita a este ensalamento.</p>
+          </div>
+      <% end %>
+    </div>
+  </div>
+  <div class="panel panel-info col-xs-12 col-md-6" style="margin: 15px">
+    <div class="panel-heading">
+      <h3 class="panel-title">Atualizações </h3>
+    </div>
+    <div class="panel-body">
+      <div style="overflow: auto; max-height: 300px;">
+        <% if @logs.any? %>
+            <ul>
+              <% @logs.each do |log| %>
+                  <dl>
+                    <dt>Usuário</dt>
+                    <dd><%= log.usuario.nome %></dd>
+                    <dt>Ação</dt>
+                    <dd><%= log.descricao %></dd>
+                    <dt>Data</dt>
+                    <dd><%= log.created_at.strftime('%d/%m/%Y ás %H:%M') %></dd>
+                  </dl>
+              <% end %>
+            </ul>
+        <% else %>
+            <div class="alert alert-info fill">
+              <p>Parece que nenhuma sugestão foi feita a este ensalamento.</p>
+            </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<h2><i class="fa fa-pencil"></i> &nbsp;Sugestões de ensalamento para a
+  disciplina <strong><%= @ensalamento.disciplina.nome %></strong>
+  no periodo <strong><%= @ensalamento.periodo.nome %></strong></h2>
+<hr>
+<% if notice %>
+    <div class="alert alert-success fill">
+      <button type="button" class="close" data-dismiss="alert">
+        ×
+      </button>
+      <%= notice %>
+    </div>
+<% end %>
+<p>
+  <%= link_to 'Adicionar Sugestão', new_ensalamento_sugestao_path(@ensalamento), class: 'btn btn-primary' %>
+</p>
+<% if @sugestoes.any? %>
+    <table class="table table-hover" style="margin-top: 10px">
+      <thead>
+      <tr>
+        <th>Sala</th>
+        <th class="text-center" width="150"><i class="fa fa-cogs"></i></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @sugestoes.each do |sugestao| %>
+          <tr>
+            <td><%= sugestao.sala.nome %></td>
+            <td class="text-center">
+              <%= link_to ensalamento_sugestao_path(@ensalamento, sugestao),
+                          method: :delete, data: {confirm: 'Deseja realmente remover esta sugestão de ensalamento?'},
+                          class: 'btn btn-xs btn-danger' do %>
+                  <i class="fa fa-trash-o"></i> Remover
+              <% end %>
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <div class="alert alert-info">
+      Parece que ainda não existe nenhuma sugestão cadastrada para este ensalamento.
+    </div>
+<% end %>

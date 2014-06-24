@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  solicitante_id: 
+  deferente_id: 
+  espaco_id: 
+  inicio: 2014-06-23 21:04:55
+  fim: 2014-06-23 21:04:55
+
+two:
+  solicitante_id: 
+  deferente_id: 
+  espaco_id: 
+  inicio: 2014-06-23 21:04:55
+  fim: 2014-06-23 21:04:55

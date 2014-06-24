@@ -1,0 +1,234 @@
+diff --git a/app/assets/javascripts/application.js b/app/assets/javascripts/application.js
+index d6925fa..e2fd0e1 100644
+--- a/app/assets/javascripts/application.js
++++ b/app/assets/javascripts/application.js
+@@ -13,4 +13,11 @@
+ //= require jquery
+ //= require jquery_ujs
+ //= require turbolinks
+-//= require_tree .
++//= require jquery-ui-1.9.2.custom.min
++//= require jquery.dataTables
++//= require jquery.selectBoxIt
++//= require DT_bootstrap
++//= require app
++//= require theme
++//= require leftmenu
++//= require bootstrap
+diff --git a/app/assets/stylesheets/scaffolds.css.scss b/app/assets/stylesheets/scaffolds.css.scss
+deleted file mode 100644
+index 6ec6a8f..0000000
+--- a/app/assets/stylesheets/scaffolds.css.scss
++++ /dev/null
+@@ -1,69 +0,0 @@
+-body {
+-  background-color: #fff;
+-  color: #333;
+-  font-family: verdana, arial, helvetica, sans-serif;
+-  font-size: 13px;
+-  line-height: 18px;
+-}
+-
+-p, ol, ul, td {
+-  font-family: verdana, arial, helvetica, sans-serif;
+-  font-size: 13px;
+-  line-height: 18px;
+-}
+-
+-pre {
+-  background-color: #eee;
+-  padding: 10px;
+-  font-size: 11px;
+-}
+-
+-a {
+-  color: #000;
+-  &:visited {
+-    color: #666;
+-  }
+-  &:hover {
+-    color: #fff;
+-    background-color: #000;
+-  }
+-}
+-
+-div {
+-  &.field, &.actions {
+-    margin-bottom: 10px;
+-  }
+-}
+-
+-#notice {
+-  color: green;
+-}
+-
+-.field_with_errors {
+-  padding: 2px;
+-  background-color: red;
+-  display: table;
+-}
+-
+-#error_explanation {
+-  width: 450px;
+-  border: 2px solid red;
+-  padding: 7px;
+-  padding-bottom: 0;
+-  margin-bottom: 20px;
+-  background-color: #f0f0f0;
+-  h2 {
+-    text-align: left;
+-    font-weight: bold;
+-    padding: 5px 5px 5px 15px;
+-    font-size: 12px;
+-    margin: -7px;
+-    margin-bottom: 0px;
+-    background-color: #c00;
+-    color: #fff;
+-  }
+-  ul li {
+-    font-size: 12px;
+-    list-style: square;
+-  }
+-}
+diff --git a/app/controllers/ensalamentos_controller.rb b/app/controllers/ensalamentos_controller.rb
+index 7394aec..61ed79d 100644
+--- a/app/controllers/ensalamentos_controller.rb
++++ b/app/controllers/ensalamentos_controller.rb
+@@ -3,9 +3,7 @@ class EnsalamentosController < ApplicationController
+ 
+   # GET /ensalamentos
+   # GET /ensalamentos.json
+-  def index
+-    @ensalamentos = Ensalamento.all
+-  end
++
+ 
+   # GET /ensalamentos/1
+   # GET /ensalamentos/1.json
+diff --git a/app/views/ensalamentos/index.html.erb b/app/views/ensalamentos/index.html.erb
+deleted file mode 100644
+index 38ef46e..0000000
+--- a/app/views/ensalamentos/index.html.erb
++++ /dev/null
+@@ -1,33 +0,0 @@
+-<h1>Listing ensalamentos</h1>
+-
+-<table>
+-  <thead>
+-    <tr>
+-      <th>Disciplina</th>
+-      <th>Sala</th>
+-      <th>Periodo</th>
+-      <th>Alunos</th>
+-      <th>Final</th>
+-      <th colspan="3"></th>
+-    </tr>
+-  </thead>
+-
+-  <tbody>
+-    <% @ensalamentos.each do |ensalamento| %>
+-      <tr>
+-        <td><%= ensalamento.disciplina %></td>
+-        <td><%= ensalamento.sala %></td>
+-        <td><%= ensalamento.periodo %></td>
+-        <td><%= ensalamento.alunos %></td>
+-        <td><%= ensalamento.final %></td>
+-        <td><%= link_to 'Show', ensalamento %></td>
+-        <td><%= link_to 'Edit', edit_ensalamento_path(ensalamento) %></td>
+-        <td><%= link_to 'Destroy', ensalamento, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+-      </tr>
+-    <% end %>
+-  </tbody>
+-</table>
+-
+-<br>
+-
+-<%= link_to 'New Ensalamento', new_ensalamento_path %>
+diff --git a/app/views/ensalamentos/index.json.jbuilder b/app/views/ensalamentos/index.json.jbuilder
+deleted file mode 100644
+index 7f2391a..0000000
+--- a/app/views/ensalamentos/index.json.jbuilder
++++ /dev/null
+@@ -1,4 +0,0 @@
+-json.array!(@ensalamentos) do |ensalamento|
+-  json.extract! ensalamento, :id, :disciplina_id, :sala_id, :periodo_id, :alunos, :final
+-  json.url ensalamento_url(ensalamento, format: :json)
+-end
+diff --git a/app/views/layouts/application.html.erb b/app/views/layouts/application.html.erb
+index a51448a..0cafa12 100644
+--- a/app/views/layouts/application.html.erb
++++ b/app/views/layouts/application.html.erb
+@@ -30,7 +30,7 @@
+     <% if @activeUser.tipo_usuario_id.in? [2, 4, 5] %>
+         <li>
+           <a>
+-            Ensalamento
++            Ensalamentos
+             <div>
+               <img src="/assets/img/icons/directions.png" alt="">
+             </div>
+@@ -48,6 +48,11 @@
+                   </ul>
+                 </li>
+             <% end %>
++            <% if @activeUser.tipo_usuario_id.in? [2,5] %>
++                <li>
++                  <%= link_to 'Solicitar ensalamento', new_ensalamento_path %>
++                </li>
++            <% end %>
+           </ul>
+         </li>
+     <% end %>
+diff --git a/app/views/predios/index.html.erb b/app/views/predios/index.html.erb
+index 305efc2..3cbabd5 100644
+--- a/app/views/predios/index.html.erb
++++ b/app/views/predios/index.html.erb
+@@ -16,7 +16,7 @@
+       <thead>
+       <tr>
+         <th>Nome</th>
+-        <th width="1%">Salas</th>
++        <th width="70">Salas</th>
+         <th class="text-center" width="70"><i class="fa fa-cogs"></i></th>
+       </tr>
+       </thead>
+diff --git a/app/views/usuarios/index.html.erb b/app/views/usuarios/index.html.erb
+index 5bab123..982c0b3 100644
+--- a/app/views/usuarios/index.html.erb
++++ b/app/views/usuarios/index.html.erb
+@@ -15,7 +15,7 @@
+     <table class="table table-hover" style="margin-top: 10px">
+       <thead>
+       <tr>
+-        <th width="1%">CI</th>
++        <th width="55">CI</th>
+         <th>Nome</th>
+         <th>CGU</th>
+         <th>Nível de Acesso</th>
+diff --git a/config/initializers/filter_parameter_logging.rb b/config/initializers/filter_parameter_logging.rb
+index 4a994e1..d1ba5ad 100644
+--- a/config/initializers/filter_parameter_logging.rb
++++ b/config/initializers/filter_parameter_logging.rb
+@@ -1,4 +1,4 @@
+ # Be sure to restart your server when you modify this file.
+ 
+ # Configure sensitive parameters which will be filtered from the log file.
+-Rails.application.config.filter_parameters += [:password]
++Rails.application.config.filter_parameters += [:login]
+diff --git a/config/routes.rb b/config/routes.rb
+index 5121415..66d6ff0 100644
+--- a/config/routes.rb
++++ b/config/routes.rb
+@@ -1,8 +1,10 @@
+ Rails.application.routes.draw do
+ 
+-  resources :ensalamentos
++  scope(path_names: {new: 'solicitar', edit: 'efetuar'}) do
++    resources :ensalamentos
++  end
+ 
+-  scope(path_names: { new: 'novo', edit: 'editar' }) do
++  scope(path_names: {new: 'novo', edit: 'editar'}) do
+     resources :predios
+     resources :salas
+     resources :periodos

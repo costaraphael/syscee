@@ -1,100 +1,161 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Syscee</title>
-  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+    <title>SYSCEE</title>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
 </head>
-<body data-no-turbolinks>
+<body>
 <nav class="sidenav left" role="navigation">
-  <ul class="menu">
-    <li class="user">
-      <div class="content" style="margin-top: 30px">
-        <!--<img class="img-circle" height="54" src="assets/img/user.jpg" alt="">-->
+    <ul class="menu">
+        <li class="user">
+            <div class="content">
+                <img height="87" src="/img/sysce_logo.png" alt="">
+                <br>
 
-        <p>SYSCEE 1.0
-          <br/>
-          <small>Sistema de Controle de Equipamentos e Espaços</small>
-        </p>
-      </div>
-    </li>
-    <li>
-      <%= link_to root_path do %>
-          Home
-          <div>
-            <img src="/assets/img/icons/desktop.png" alt="">
-          </div>
-      <% end %>
-    </li>
-    <% if @activeUser.tipo_usuario_id.in? [2, 4, 5] %>
-        <li>
-          <a>
-            Ensalamento
-            <div>
-              <img src="/assets/img/icons/directions.png" alt="">
+                <div>
+                    <small>Sistema de Controle de Equipamentos e Espaços</small>
+                </div>
+                </p>
             </div>
-          </a>
-          <ul class="dropdown-menu" role="menu">
-            <li><a class="back"><i class="fa fa-angle-left"></i> Voltar</a></li>
-            <% if @activeUser.tipo_usuario_id.in? [4, 5] %>
-                <li>
-                  <a>Configurações</a>
-                  <ul class="dropdown-menu second" role="menu">
-                    <li><a class="back"><i class="fa fa-angle-left"></i> Voltar</a></li>
-                    <li><%= link_to 'Períodos', periodos_path %></li>
-                    <li><%= link_to 'Prédios', predios_path %></li>
-                    <li><%= link_to 'Salas', salas_path %></li>
-                  </ul>
-                </li>
+        </li>
+        <li>
+            <%= link_to root_path do %>
+                Home
+                <div>
+                    <img src="/assets/img/icons/desktop.png" alt="">
+                </div>
             <% end %>
-          </ul>
         </li>
-    <% end %>
-    <% if @activeUser.tipo_usuario_id.in? [2, 4, 5] %>
+        <% if @activeUser.tipo_usuario_id.in? [2, 4, 5] %>
+            <li>
+                <a>
+                    Ensalamentos
+                    <div>
+                        <img src="/assets/img/icons/directions.png" alt="">
+                    </div>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a class="back"><i class="fa fa-angle-left"></i> Voltar</a></li>
+                    <% if @activeUser.tipo_usuario_id.in? [4, 5] %>
+                        <li>
+                            <a>Configurações</a>
+                            <ul class="dropdown-menu second" role="menu">
+                                <li><a class="back"><i class="fa fa-angle-left"></i> Voltar</a></li>
+                                <li><%= link_to 'Períodos', periodos_path %></li>
+                                <li><%= link_to 'Prédios', predios_path %></li>
+                                <li><%= link_to 'Salas', salas_path %></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <%= link_to 'Ensalamentos fechados', ensalamentos_path %>
+                        </li>
+                    <% end %>
+                    <% if @activeUser.tipo_usuario_id == 4 %>
+                        <li>
+                            <%= link_to abertos_ensalamentos_path do %>
+                                Ensalamentos em aberto
+                                (<%= Ensalamento.where('final = false').where('ativo = true').count %>)
+                            <% end %>
+                        </li>
+                        <li>
+                            <%= link_to 'Ensalamentos fechados', fechados_ensalamentos_path %>
+                        </li>
+                    <% end %>
+                    <% if @activeUser.tipo_usuario_id == 2 %>
+                        <li>
+                            <%= link_to 'Solicitar ensalamento', new_ensalamento_path %>
+                        </li>
+                        <li>
+                            <%= link_to 'Ensalamentos solicitados', solicitados_ensalamentos_path %>
+                        </li>
+                    <% end %>
+                </ul>
+            </li>
+        <% end %>
+        <% if @activeUser.tipo_usuario_id.in? [2, 4, 5] %>
+            <li>
+                <%= link_to cursos_path do %>
+                    Cursos
+                    <div>
+                        <img src="/assets/img/icons/hat.png" alt="">
+                    </div>
+                <% end %>
+            </li>
+        <% end %>
+        <% if @activeUser.tipo_usuario_id.in? [3, 5] %>
+            <li>
+                <%= link_to espacos_path do %>
+                    Espaços
+                    <div>
+                        <img src="/assets/img/icons/home.png" alt="">
+                    </div>
+                <% end %>
+            </li>
+        <% end %>
         <li>
-          <%= link_to cursos_path do %>
-              Cursos
-              <div>
-                <img src="/assets/img/icons/hat.png" alt="">
-              </div>
-          <% end %>
+            <a>
+                Reservas
+                <div>
+                    <img src="/assets/img/icons/note.png" alt="">
+                </div>
+            </a>
+            <ul class="dropdown-menu" role="menu">
+                <li><a class="back"><i class="fa fa-angle-left"></i> Voltar</a></li>
+                <% if @activeUser.tipo_usuario_id.in? [3, 5] %>
+                    <li>
+                        <%= link_to abertas_reservas_path do %>
+                            Reservas em aberto
+                            (<%= Reserva.where('status = 1').count %>)
+                        <% end %>
+                    </li>
+                    <li>
+                        <%= link_to 'Reservas fechadas', fechadas_reservas_path %>
+                    </li>
+                <% end %>
+                <li>
+                    <%= link_to 'Solicitar Reserva', new_reserva_path %>
+                </li>
+                <li>
+                    <%= link_to 'Reservas solicitadas', solicitadas_reservas_path %>
+                </li>
+            </ul>
         </li>
-    <% end %>
-    <% if @activeUser.tipo_usuario_id == 5 %>
-        <li>
-          <%= link_to usuarios_path do %>
-              Usuários
-              <div>
-                <img src="/assets/img/icons/users.png" alt="">
-              </div>
-          <% end %>
+        <% if @activeUser.tipo_usuario_id == 5 %>
+            <li>
+                <%= link_to usuarios_path do %>
+                    Usuários
+                    <div>
+                        <img src="/assets/img/icons/users.png" alt="">
+                    </div>
+                <% end %>
+            </li>
+        <% end %>
+        <li class="logout">
+            <%= link_to logout_path do %>
+                Logout
+                <div>
+                    <img src="/assets/img/icons/off.png" alt="">
+                </div>
+            <% end %>
         </li>
-    <% end %>
-    <li class="logout">
-      <%= link_to logout_path do %>
-          Logout
-          <div>
-            <img src="/assets/img/icons/off.png" alt="">
-          </div>
-      <% end %>
-    </li>
-  </ul>
+    </ul>
 </nav>
 <div class="overlay"></div>
 <div class="controlshint"><img src="/assets/img/swipe.png" alt="Menu Help"></div>
 <section class="wrap">
-  <div class="container">
-    <div class="well">
-      <%= yield %>
+    <div class="container">
+        <div class="well main" style="display:none;">
+            <%= yield %>
+        </div>
     </div>
-  </div>
 </section>
 <script type="text/javascript">
-    //    $(document).bind("mobileinit", function () {
-    //    $.extend($.mobile, {autoInitializePage: false})
-    //});
+    $(document).bind("mobileinit", function () {
+        $.extend($.mobile, {autoInitializePage: false})
+    });
 </script>
-<!--<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>-->
+<script src="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.js"></script>
 </body>
 </html>

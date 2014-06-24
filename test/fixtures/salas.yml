@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  predio_id: 
+  nome: MyString
+  numero: 1
+  capacidade: 1
+
+two:
+  predio_id: 
+  nome: MyString
+  numero: 1
+  capacidade: 1

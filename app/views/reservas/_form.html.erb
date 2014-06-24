@@ -1,0 +1,79 @@
+<%= form_for(@reserva) do |f| %>
+    <% if @reserva.errors.any? %>
+        <div class="alert alert-danger fill">
+            <h4><%= pluralize(@reserva.errors.count, 'erro impediu', 'erros impediram') %> esta reserva de ser
+                salva.</h4>
+
+            <ul>
+                <% @reserva.errors.full_messages.each do |message| %>
+                    <li>
+                        <small><%= message %></small>
+                    </li>
+                <% end %>
+            </ul>
+        </div>
+    <% end %>
+    <hr>
+    <% if @reserva.new_record? %>
+        <div class="row">
+            <div class="col col-xs-6 form-group">
+                <%= f.label 'Disciplina' %>
+                <br>
+                <%= f.collection_select(:espaco_id, Espaco.all, :id, :nome, {:prompt => 'Selecione um espaco.'}, {class: 'select2'}) %>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-xs-6 form-group">
+                <%= f.label 'Início da reserva' %>
+                <br>
+                <%= f.text_field :inicio, class: 'form-control input-sm date-time-picker' %>
+            </div>
+            <div class="col col-xs-6 form-group">
+                <%= f.label 'Fim da reserva' %>
+                <br>
+                <%= f.text_field :fim, class: 'form-control input-sm date-time-picker' %>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-xs-12 form-group">
+                <%= f.label 'Descrição da reserva' %>
+                <br>
+                <%= f.text_area :descricao, class: 'form-control' %>
+            </div>
+        </div>
+    <% else %>
+        <div class="row">
+            <div class="panel panel-info col-xs-12 col-md-6" style="margin: 15px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Dados da reserva </h3>
+                </div>
+                <div class="panel-body">
+                    <dl>
+                        <dt>Solicitante</dt>
+                        <dd><%= @reserva.solicitante.nome %></dd>
+                        <br>
+                        <dt>Espaço</dt>
+                        <dd><%= @reserva.espaco.nome %></dd>
+                        <br>
+                        <dt>Período</dt>
+                        <dd><%= "De #{@reserva.inicio.strftime('%d/%m/%Y às %H:%M')} até #{@reserva.fim.strftime('%d/%m/%Y às %H:%M')}" %></dd>
+                        <dt>Descrição</dt>
+                        <dd><%= @reserva.descricao %></dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 form-group">
+                <%= f.label 'Ação' %>
+                <br>
+                <%= f.select(:status, [['Autorizar', 2], ['Negar', 3]], {prompt: 'Selecione qual ação será tomada.'}, {class: 'form-control'}) %>
+            </div>
+        </div>
+    <% end %>
+    <hr>
+    <div class="actions" style="margin-bottom: 50px">
+        <%= f.submit @reserva.new_record? ? 'Solicitar' : 'Efetuar', class: 'btn btn-primary pull-left' %>
+        <%= link_to 'Voltar', 'javascript:void(0)', class: 'btn btn-default pull-right', onclick: 'history.go(-1)' %>
+    </div>
+<% end %>

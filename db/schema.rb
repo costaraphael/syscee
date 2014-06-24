@@ -11,12 +11,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140530043525) do
+ActiveRecord::Schema.define(version: 20140624051123) do
 
   create_table "cursos", force: true do |t|
     t.string   "nome"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "coordenador_id"
   end
 
   create_table "disciplinas", force: true do |t|
@@ -35,14 +36,25 @@ ActiveRecord::Schema.define(version: 20140530043525) do
     t.integer  "sala_id"
     t.integer  "periodo_id"
     t.integer  "alunos"
-    t.boolean  "final"
+    t.boolean  "final",          default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "solicitante_id"
+    t.integer  "deferente_id"
+    t.boolean  "ativo",          default: true
   end
 
+  add_index "ensalamentos", ["deferente_id"], name: "index_ensalamentos_on_deferente_id", using: :btree
   add_index "ensalamentos", ["disciplina_id"], name: "index_ensalamentos_on_disciplina_id", using: :btree
   add_index "ensalamentos", ["periodo_id"], name: "index_ensalamentos_on_periodo_id", using: :btree
   add_index "ensalamentos", ["sala_id"], name: "index_ensalamentos_on_sala_id", using: :btree
+  add_index "ensalamentos", ["solicitante_id"], name: "index_ensalamentos_on_solicitante_id", using: :btree
+
+  create_table "espacos", force: true do |t|
+    t.string   "nome"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "logs", force: true do |t|
     t.integer  "usuario_id"
@@ -50,6 +62,7 @@ ActiveRecord::Schema.define(version: 20140530043525) do
     t.string   "descricao"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "loggable_type"
   end
 
   add_index "logs", ["loggable_id"], name: "index_logs_on_loggable_id", using: :btree
@@ -67,6 +80,22 @@ ActiveRecord::Schema.define(version: 20140530043525) do
     t.datetime "updated_at"
   end
 
+  create_table "reservas", force: true do |t|
+    t.integer  "solicitante_id"
+    t.integer  "deferente_id"
+    t.integer  "espaco_id"
+    t.datetime "inicio"
+    t.datetime "fim"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "status"
+    t.text     "descricao"
+  end
+
+  add_index "reservas", ["deferente_id"], name: "index_reservas_on_deferente_id", using: :btree
+  add_index "reservas", ["espaco_id"], name: "index_reservas_on_espaco_id", using: :btree
+  add_index "reservas", ["solicitante_id"], name: "index_reservas_on_solicitante_id", using: :btree
+
   create_table "salas", force: true do |t|
     t.integer  "predio_id"
     t.string   "nome"
@@ -78,15 +107,15 @@ ActiveRecord::Schema.define(version: 20140530043525) do
 
   add_index "salas", ["predio_id"], name: "index_salas_on_predio_id", using: :btree
 
-  create_table "sugestaos", force: true do |t|
-    t.integer  "ensalamento_id"
+  create_table "sugestoes", force: true do |t|
     t.integer  "sala_id"
+    t.integer  "ensalamento_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "sugestaos", ["ensalamento_id"], name: "index_sugestaos_on_ensalamento_id", using: :btree
-  add_index "sugestaos", ["sala_id"], name: "index_sugestaos_on_sala_id", using: :btree
+  add_index "sugestoes", ["ensalamento_id"], name: "index_sugestoes_on_ensalamento_id", using: :btree
+  add_index "sugestoes", ["sala_id"], name: "index_sugestoes_on_sala_id", using: :btree
 
   create_table "tipo_usuarios", force: true do |t|
     t.string   "nome"
@@ -100,6 +129,7 @@ ActiveRecord::Schema.define(version: 20140530043525) do
     t.integer  "tipo_usuario_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "curso_id"
   end
 
   add_index "usuarios", ["tipo_usuario_id"], name: "index_usuarios_on_tipo_usuario_id", using: :btree

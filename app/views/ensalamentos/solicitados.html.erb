@@ -1,0 +1,63 @@
+<h2><i class="fa fa-compass"></i> &nbsp;Ensalamentos solicitados</h2>
+<hr>
+<% if notice %>
+    <div class="alert alert-success fill">
+      <button type="button" class="close" data-dismiss="alert">
+        ×
+      </button>
+      <%= notice %>
+    </div>
+<% end %>
+<p>
+  <%= link_to 'Solicitar Ensalamento', new_ensalamento_path, class: 'btn btn-primary' %>
+</p>
+<% if @ensalamentos.any? %>
+    <table class="table table-hover" style="margin-top: 10px">
+      <thead>
+      <tr>
+        <th>Perídodo</th>
+        <th>Disciplina</th>
+        <th width="140">Qtd. de Alunos</th>
+        <th>Sala</th>
+        <th class="text-center" width="70"><i class="fa fa-cogs"></i></th>
+      </tr>
+      </thead>
+
+      <tbody>
+      <% @ensalamentos.each do |ensalamento| %>
+          <tr>
+            <td><%= ensalamento.periodo.nome %></td>
+            <td><%= ensalamento.disciplina.nome %></td>
+            <td class="text-center"><%= ensalamento.alunos %></td>
+            <td class="text-center"><%= ensalamento.sala ? ensalamento.sala.nome : '--' %></td>
+            <td class="text-center">
+              <div class="dropdown">
+                <a class="btn btn-xs btn-default" data-toggle="dropdown">
+                  <i class="fa fa-cog"></i><span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu text-left">
+                  <li role="presentation"><%= link_to ensalamento_path(ensalamento) do %>
+                        <i class="fa fa-folder-open-o"></i> Detalhes
+                    <% end %></li>
+                  <li role="presentation"><%= link_to ensalamento_sugestoes_path(ensalamento) do %>
+                        <i class="fa fa-plus-square-o"></i> Sugestões
+                    <% end %></li>
+                  <% unless ensalamento.final %>
+                      <li role="presentation"><%= link_to ensalamento, method: :delete, data: {confirm: 'Deseja realmente remover esta sugestão de ensalamento?'} do %>
+                            <i class="fa fa-trash-o"></i> Remover
+                        <% end %></li>
+                  <% end %>
+                </ul>
+              </div>
+
+
+            </td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+<% else %>
+    <div class="alert alert-info">
+      Parece que você ainda não solicitou nenhum ensalamento.
+    </div>
+<% end %>

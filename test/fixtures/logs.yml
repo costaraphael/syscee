@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  usuario_id: 
+  loggable_id: 
+  descricao: MyString
+
+two:
+  usuario_id: 
+  loggable_id: 
+  descricao: MyString

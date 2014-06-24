@@ -1,7 +1,7 @@
 <%= form_for(@periodo) do |f| %>
     <% if @periodo.errors.any? %>
         <div class="alert alert-danger fill">
-          <h4><%= pluralize(@periodo.errors.count, "erro") %> impediu este período de ser salvo.</h4>
+          <h4><%= pluralize(@periodo.errors.count, 'erro impediu', 'erros impediram') %> este período de ser salvo.</h4>
 
           <ul>
             <% @periodo.errors.full_messages.each do |message| %>

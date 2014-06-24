@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="3381139768">
+    <data-source source="LOCAL" name="MySQL - @syscee.local" uuid="7a98648d-f1a7-4cb2-a0a2-f5a145afa127">
+      <driver-ref>mysql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://syscee.local:3306</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfe0dff9dfeddfe9df93dfc9dff2dfc4dfdedffbdfe8dfe8dfe5df93dff3df9a</user-password>
+      <driver-properties>
+        <property name="zeroDateTimeBehavior" value="convertToNull" />
+        <property name="tinyInt1isBit" value="false" />
+      </driver-properties>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails syscee: development" uuid="25c1dbb8-75d6-4209-8510-c89935abd4f3">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/zadmin_syscee</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfe0dff9dfeddfe9df93dfc9dff2dfc4dfdedffbdfe8dfe8dfe5df93dff3df9a</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails syscee: test" uuid="739d5d6a-ea81-4a78-9a0f-466227386d84">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/zadmin_sysceetest</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfe0dff9dfeddfe9df93dfc9dff2dfc4dfdedffbdfe8dfe8dfe5df93dff3df9a</user-password>
+      <libraries />
+    </data-source>
+    <data-source source="LOCAL" name="Rails syscee: production" uuid="ec3ca008-d37c-45c2-aebc-6af439bd7b1c">
+      <driver-ref>mysql</driver-ref>
+      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://127.0.0.1/zadmin_syscee</jdbc-url>
+      <user-name>root</user-name>
+      <user-password>dfe0dff9dfeddfe9df93dfc9dff2dfc4dfdedffbdfe8dfe8dfe5df93dff3df9a</user-password>
+      <libraries />
+    </data-source>
+  </component>
+</project>
+

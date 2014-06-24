@@ -1,37 +1,88 @@
 <%= form_for(@ensalamento) do |f| %>
-  <% if @ensalamento.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@ensalamento.errors.count, "error") %> prohibited this ensalamento from being saved:</h2>
+    <% if @ensalamento.errors.any? %>
+        <div class="alert alert-danger fill">
+          <h4><%= pluralize(@ensalamento.errors.count, 'erro impediu', 'erros impediram') %> este ensalamento de ser
+            salvo.</h4>
 
-      <ul>
-      <% @ensalamento.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+          <ul>
+            <% @ensalamento.errors.full_messages.each do |message| %>
+                <li>
+                  <small><%= message %></small>
+                </li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+    <hr>
+    <% if @ensalamento.new_record? %>
+        <div class="row">
+          <div class="col col-xs-6 form-group">
+            <%= f.label 'Disciplina' %>
+            <br>
+            <%= f.collection_select(:disciplina_id, Disciplina.where('curso_id = ?', @activeUser.curso_id), :id, :nome, {:prompt => 'Selecione uma disciplina'}, {class: 'select2'}) %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col col-xs-6 form-group">
+            <%= f.label 'Período' %>
+            <br>
+            <%= f.collection_select(:periodo_id, Periodo.all, :id, :nome, {:prompt => 'Selecione um período'}, {class: 'form-control'}) %>
+          </div>
+          <div class="col col-xs-6 form-group ">
+            <%= f.label 'Quantidade de alunos' %>
+            <br>
+            <%= f.number_field :alunos, class: 'form-control', min: 0 %>
+          </div>
+        </div>
+    <% else %>
+        <div class="row">
+          <div class="panel panel-info col-xs-12 col-md-6" style="margin: 15px">
+            <div class="panel-heading">
+              <h3 class="panel-title">Dados do ensalamento </h3>
+            </div>
+            <div class="panel-body">
+              <dl>
+                <dt>Período</dt>
+                <dd><%= @ensalamento.periodo.nome %></dd>
+                <br>
+                <dt>Disciplina</dt>
+                <dd><%= @ensalamento.disciplina.nome %> (<%= @ensalamento.disciplina.curso.nome %>)</dd>
+                <br>
+                <dt>Quantidade de alunos</dt>
+                <dd><%= @ensalamento.alunos %></dd>
+              </dl>
+            </div>
+          </div>
+          <div class="panel panel-info col-xs-12 col-md-5" style="margin: 15px">
+            <div class="panel-heading">
+              <h3 class="panel-title">Sugestões </h3>
+            </div>
+            <div class="panel-body">
+              <% if @ensalamento.sugestoes.any? %>
+                  <ul>
+                    <% @ensalamento.sugestoes.each do |sugestao| %>
+                        <li><%= sugestao.sala.nome %></li>
+                    <% end %>
+                  </ul>
+              <% else %>
+                  <div class="alert alert-info fill">
+                    <p>Parece que nenhuma sugestão foi feita a este ensalamento.</p>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 form-group">
+            <%= f.label 'Sala' %>
+            <br>
+            <%= f.collection_select(:sala_id, Sala.ensalaveis(@ensalamento), :id, lambda {|s| "#{s.nome} | Capacidade: #{s.capacidade}"}, {:prompt => 'Selecione uma sala.'}, {class: 'select2'}) %>
+          </div>
+        </div>
+    <% end %>
+    <hr>
+    <div class="actions" style="margin-bottom: 50px">
+      <%= f.submit @ensalamento.new_record? ? 'Solicitar' : 'Efetuar', class: 'btn btn-primary pull-left' %>
+      <%= link_to 'Voltar', 'javascript:void(0)', class: 'btn btn-default pull-right', onclick: 'history.go(-1)' %>
     </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :disciplina_id %><br>
-    <%= f.text_field :disciplina_id %>
-  </div>
-  <div class="field">
-    <%= f.label :sala_id %><br>
-    <%= f.text_field :sala_id %>
-  </div>
-  <div class="field">
-    <%= f.label :periodo_id %><br>
-    <%= f.text_field :periodo_id %>
-  </div>
-  <div class="field">
-    <%= f.label :alunos %><br>
-    <%= f.number_field :alunos %>
-  </div>
-  <div class="field">
-    <%= f.label :final %><br>
-    <%= f.check_box :final %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>

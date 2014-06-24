@@ -25,7 +25,7 @@
       <% @disciplinas.each do |disciplina| %>
           <tr>
             <td><%= disciplina.nome %></td>
-            <td><%= disciplina.professor.nome %></td>
+            <td><%= disciplina.professor.nil? ? '--' : disciplina.professor.nome %></td>
             <td class="text-center">
               <div class="dropdown">
                 <a class="btn btn-xs btn-default" data-toggle="dropdown">
